@@ -1,0 +1,111 @@
+----------------------------------------------------------
+DOCUMENTATION TECHNIQUE - Projet eTickets JO
+----------------------------------------------------------
+
+1. PRÉSENTATION GÉNÉRALE
+----------------------------------------------------------
+Nom du projet : Plateforme e-Tickets JO
+Objectif : Permettre aux visiteurs d’acheter et stocker des billets numériques (QR code) pour les Jeux Olympiques de France 2024.
+
+Stack technique :
+- Front-end : React (Vite.js)
+- Back-end : Node.js + Express
+- Base de données : SQLite (relationnelle)
+- Langage : JavaScript ES6
+- Gestion de projet : Trello (méthode Kanban)
+- Versioning : Git + GitHub
+
+----------------------------------------------------------
+2. ARCHITECTURE GLOBALE
+----------------------------------------------------------
+etickets-jo/
+├── backend/
+│   ├── server.js          → API Express
+│   ├── db.js              → Connexion + création SQLite
+│   ├── seed.js            → Données initiales
+│   ├── .env               → Variables d’environnement
+│   ├── sql/schema.sql     → Script SQL (MCD)
+│   └── package.json
+└── frontend/
+    ├── src/
+    │   ├── components/    → Composants React
+    │   ├── pages/         → Pages (Home, Admin, etc.)
+    │   ├── api.js         → Fonctions d’appel à l’API
+    │   └── auth.js        → Gestion des tokens JWT
+    ├── vite.config.js
+    └── package.json
+
+Le front communique avec le back via des appels HTTP JSON (Fetch) vers http://localhost:4000/api
+
+----------------------------------------------------------
+3. BASE DE DONNÉES
+----------------------------------------------------------
+Type : SQLite relationnelle (basée sur le MCD fourni)
+
+Tables principales :
+- utilisateur (id, nom, email, motDePasseHash, role, cleCompte)
+- offre (id, titre, type, prix)
+- commande (id, idUtilisateur, total, cleAchat)
+- ticket (id, idCommande, idUtilisateur, idOffre, finalKey, qrCodeBase64)
+
+Relations :
+- 1 utilisateur → plusieurs commandes
+- 1 commande → plusieurs tickets
+- 1 offre → plusieurs tickets
+
+----------------------------------------------------------
+4. SÉCURITÉ
+----------------------------------------------------------
+- Authentification JWT (expiration 2h)
+- Hash de mot de passe avec bcrypt (10 rounds)
+- Validation des données avec Zod
+- Protection CORS (uniquement localhost:5173)
+- Requêtes SQL préparées (better-sqlite3)
+- Variables sensibles dans .env (non versionné)
+- Middleware de rôle pour sécuriser l’espace admin
+
+----------------------------------------------------------
+5. GÉNÉRATION DES CLÉS ET QR CODE
+----------------------------------------------------------
+1. À la création du compte → clé compte (UUID)
+2. À chaque achat → clé achat (UUID)
+3. Clé finale = SHA-256(cléCompte + ":" + cléAchat)
+4. QR Code généré à partir de la clé finale
+5. QR Code stocké en base64 dans la table tickets
+
+----------------------------------------------------------
+6. ÉVOLUTIONS POSSIBLES
+----------------------------------------------------------
+- Ajout d’un module de scan QR en temps réel
+- Migration vers PostgreSQL (déploiement cloud)
+- Intégration d’un vrai paiement (ex: Stripe)
+- Multi-événement (JO, Paralympiques…)
+- Envoi du billet par e-mail (QR code joint)
+
+----------------------------------------------------------
+7. DÉPLOIEMENT (OPTIONNEL)
+----------------------------------------------------------
+Option Fly.io :
+- Fichier Dockerfile + commande flyctl deploy
+- Backend : https://etickets-jo-api.fly.dev
+
+Option GitHub Pages (Frontend) :
+- npm run build → dossier /dist
+- Activation Pages dans Settings → Pages
+
+----------------------------------------------------------
+8. TESTS
+----------------------------------------------------------
+Tests manuels validés :
+- Authentification utilisateur
+- CRUD offres (admin)
+- Génération QR code
+- Simulation d’achat
+- Sécurisation par token JWT
+
+----------------------------------------------------------
+9. SAUVEGARDE ET MAINTENANCE
+----------------------------------------------------------
+- Sauvegarde régulière du fichier etickets.db
+- npm audit pour vérifier les failles
+- Possibilité d’automatiser les backups avec cron
