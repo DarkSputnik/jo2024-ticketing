@@ -1,0 +1,90 @@
+----------------------------------------------------------
+MANUEL D’UTILISATION - Plateforme eTickets JO
+----------------------------------------------------------
+
+1. CONNEXION AU SITE
+----------------------------------------------------------
+1. Ouvre le site (local ou déployé).
+2. Clique sur “Inscription”.
+3. Saisis ton nom, ton e-mail et un mot de passe avec :
+   - 8 caractères minimum
+   - 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial
+4. Clique sur “Créer le compte”.
+5. Tu es automatiquement connecté.
+
+----------------------------------------------------------
+2. CONSULTER LES OFFRES
+----------------------------------------------------------
+- Clique sur “Offres” dans le menu.
+- Découvre les billets disponibles : Solo, Duo, Famille.
+- Clique sur “Ajouter au panier” pour choisir une offre.
+
+----------------------------------------------------------
+3. GÉRER LE PANIER
+----------------------------------------------------------
+- Clique sur “Panier”.
+- Tu peux modifier la quantité avec les boutons + et –.
+- Clique sur “Payer (mock)” pour simuler un paiement.
+
+Aucun paiement réel n’est effectué (mock interne).
+
+----------------------------------------------------------
+4. MES BILLETS
+----------------------------------------------------------
+- Clique sur “Mes Billets”.
+- Tes billets apparaissent avec :
+  - Le nom de l’offre
+  - Une clé sécurisée (tronquée)
+  - Un bouton “Voir QR” pour afficher le QR Code
+
+Tu peux présenter ce QR Code le jour des JO pour le contrôle d’accès.
+
+----------------------------------------------------------
+5. ESPACE ADMINISTRATEUR
+----------------------------------------------------------
+Connexion administrateur :
+- Email : admin@jo.fr
+- Mot de passe : Admin!2024
+
+Fonctionnalités :
+- Gérer les offres (ajouter / modifier / supprimer)
+- Consulter les statistiques de ventes (CA, unités vendues)
+- Accès réservé au rôle ADMIN
+
+----------------------------------------------------------
+6. DÉCONNEXION
+----------------------------------------------------------
+Clique sur “Déconnexion” dans la barre de navigation pour fermer ta session.
+
+----------------------------------------------------------
+7. PROBLÈMES FRÉQUENTS
+----------------------------------------------------------
+Problème : “Invalid credentials”
+→ Vérifie ton email et ton mot de passe.
+
+Problème : Impossible d’ajouter au panier
+→ Connecte-toi avant de passer au paiement.
+
+Problème : QR Code ne s’affiche pas
+→ Rafraîchis la page “Mes Billets”.
+
+Problème : Accès refusé à /admin
+→ Tu dois être connecté avec un compte administrateur.
+
+----------------------------------------------------------
+8. RÉSUMÉ DES COMPTES DISPONIBLES
+----------------------------------------------------------
+Compte utilisateur (classique) :
+→ Créé via l’inscription sur le site.
+
+Compte administrateur :
+→ admin@jo.fr / Admin!2024
+→ Créé automatiquement lors du seed.
+
+----------------------------------------------------------
+9. SUPPORT TECHNIQUE
+----------------------------------------------------------
+Si un problème persiste :
+- Vérifie le port du backend (4000)
+- Vérifie que le frontend (5173) est bien lancé
+- Consulte la console du navigateur (F12 → Console)
